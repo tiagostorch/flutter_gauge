@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gauge/handpainter.dart';
 import 'package:flutter_gauge/linepainter.dart';
@@ -49,10 +47,10 @@ class FlutterGaugeMain extends StatefulWidget {
   EdgeInsets padding;
   Color inactiveColor;
   Color activeColor;
-  bool isDecimal;
+  String counterText;
 
 
-  FlutterGaugeMain({this.isDecimal,this.inactiveColor, this.activeColor, this.textStyle,this.counterStyle,this.numberInAndOut,this.width,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.isMark,this.handSize=30,this.start,this.end,this.highlightStart,this.highlightEnd, this.eventObservable,@required this.fontFamily,@required this.widthCircle,}){
+  FlutterGaugeMain({this.inactiveColor, this.activeColor, this.textStyle,this.counterStyle,this.numberInAndOut,this.width,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.isMark,this.handSize=30,this.start,this.end,this.highlightStart,this.highlightEnd, this.eventObservable,@required this.fontFamily,@required this.widthCircle, @required this.counterText}){
     padding = EdgeInsets.all(widthCircle);
   }
 
@@ -210,12 +208,11 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
                       child: widget.counterAlign != CounterAlign.none
                       ?new CustomPaint(
                           painter: new GaugeTextCounter(
-                              isDecimal: widget.isDecimal,
                               start: this.start,
                               width: widget.widthCircle,
                               counterAlign: widget.counterAlign,
                               end: this.end,
-                              value: this.val,
+                              value: widget.counterText,
                               fontFamily: widget.fontFamily,
                               textStyle:widget.counterStyle == null
                               ?TextStyle(

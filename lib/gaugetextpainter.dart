@@ -183,13 +183,12 @@ class GaugeTextCounter extends CustomPainter {
 
   int end;
   int start;
-  double value;
+  String value;
   String fontFamily;
   CounterAlign counterAlign;
   double width;
-  bool isDecimal;
 
-  GaugeTextCounter({this.isDecimal,this.width,this.counterAlign,this.start, this.end, this.value,this.fontFamily,this.textStyle,})
+  GaugeTextCounter({this.width,this.counterAlign,this.start, this.end, this.value,this.fontFamily,this.textStyle,})
       : tickPaint = new Paint(),
         textPainter = new TextPainter(
           textAlign: TextAlign.center,
@@ -208,12 +207,7 @@ class GaugeTextCounter extends CustomPainter {
       if (i == 30) {
 
         String label;
-
-        if(isDecimal == true){
-          label = this.value.toStringAsFixed(1);
-        }else{
-          label = (this.value.toInt()).toString();
-        }
+        label = this.value;
 
         canvas.save();
 

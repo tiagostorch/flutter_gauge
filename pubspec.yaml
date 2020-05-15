@@ -1,8 +1,8 @@
 name: flutter_gauge
-description: A little widget that given an Observable gives you an updated FlutterGauge.
-version: 1.0.8
-author: alitorki2651@gmail.com
-homepage: https://github.com/alitorki2651/flutter_gauge
+description: Custom flutter gauga based on https://github.com/alitorki2651/flutter_gauge
+version: 1.0.0
+author: ed_bautista044@hotmail.com
+homepage: https://github.com/EdgardoSchiffer/flutter_gauge
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
