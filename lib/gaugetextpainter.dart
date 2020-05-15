@@ -232,7 +232,7 @@ class GaugeTextCounter extends CustomPainter {
             style: subtitleStyle
           );
           textPainter.layout();
-          offset = new Offset(-(textPainter.width / 2), 40);
+          offset = new Offset(-(textPainter.width / 2), titleStyle.fontSize);
           textPainter.paint(canvas, offset);
         }
         canvas.restore();

@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     titleText: "6.8",
                     titleStyle: TextStyle(
                       color: Colors.black,
-                      fontSize: 30,
+                      fontSize: 40,
                     ),
                     subtitleText: "de 10.0",
                     subtitleStyle: TextStyle(
