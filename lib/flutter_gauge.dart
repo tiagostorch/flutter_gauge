@@ -93,9 +93,6 @@ class _FlutterGaugeState extends State<FlutterGauge> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 400), (){
-      eventObservable.add(widget.index);
-    });
   }
 
 
@@ -104,6 +101,9 @@ class _FlutterGaugeState extends State<FlutterGauge> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 400), (){
+      eventObservable.add(widget.index);
+    });
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
