@@ -73,11 +73,14 @@ class FlutterGauge extends StatefulWidget {
   Color activeColor;
   double paddingHand;
   Animate animate;
-  TextStyle counterStyle;
-  TextStyle textStyle;
-  String counterText;
+  TextStyle titleStyle;
+  TextStyle subtitleStyle;
+  String titleText;
+  String subtitleText;
+  final double maxWidthCircle = 40;
+  Duration animationDuration;
 
-  FlutterGauge({this.inactiveColor = Colors.black,this.activeColor = Colors.red,this.textStyle,this.counterStyle,this.numberInAndOut = NumberInAndOut.inside,this.width/*,this.animate=Animate.none*/,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.handSize=30,this.start=0,this.end=100,@required this.index,this.fontFamily="",this.widthCircle=20,@required this.counterText});
+  FlutterGauge({this.inactiveColor = Colors.black,this.activeColor = Colors.red,this.titleStyle,this.numberInAndOut = NumberInAndOut.inside,this.width/*,this.animate=Animate.none*/,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.handSize=30,this.start=0,this.end=100,@required this.index,this.fontFamily="",this.widthCircle=20,@required this.titleText, this.subtitleStyle, this.subtitleText, this.animationDuration});
 
 
   @override
@@ -106,8 +109,8 @@ class _FlutterGaugeState extends State<FlutterGauge> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         FlutterGaugeMain(
-            counterStyle: widget.counterStyle,
-            textStyle: widget.textStyle,
+            subtitleStyle: widget.subtitleStyle,
+            titleStyle: widget.titleStyle,
             numberInAndOut: widget.numberInAndOut,
             paddingHand : widget.paddingHand,
             circleColor : widget.circleColor,
@@ -127,7 +130,7 @@ class _FlutterGaugeState extends State<FlutterGauge> {
             highlightEnd : (0/widget.end.toInt()),
             eventObservable : eventObservable,
             fontFamily : widget.fontFamily,
-            widthCircle : widget.widthCircle > 30 ? 30 :widget.widthCircle,
+            widthCircle : widget.widthCircle > widget.maxWidthCircle ? widget.maxWidthCircle :widget.widthCircle,
             inactiveColor : widget.inactiveColor,
             activeColor : widget.activeColor,
             width : (
@@ -140,7 +143,10 @@ class _FlutterGaugeState extends State<FlutterGauge> {
                         ?MediaQuery.of(context).size.width
                         :widget.width
                 )
-            ), counterText: widget.counterText,
+            ), 
+            titleText: widget.titleText,
+            subtitle: widget.subtitleText,
+            animationDuration: widget.animationDuration,
         )
       ],
     );

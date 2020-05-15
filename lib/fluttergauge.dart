@@ -41,21 +41,29 @@ class FlutterGaugeMain extends StatefulWidget {
   Color indicatorColor;
   double paddingHand;
   double width;
+  double height;
   NumberInAndOut numberInAndOut;
-  TextStyle counterStyle;
-  TextStyle textStyle;
+  TextStyle titleStyle;
+  TextStyle subtitleStyle;
   EdgeInsets padding;
   Color inactiveColor;
   Color activeColor;
-  String counterText;
+  String titleText;
+  String subtitle;
+  Duration animationDuration;
 
 
-  FlutterGaugeMain({this.inactiveColor, this.activeColor, this.textStyle,this.counterStyle,this.numberInAndOut,this.width,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.isMark,this.handSize=30,this.start,this.end,this.highlightStart,this.highlightEnd, this.eventObservable,@required this.fontFamily,@required this.widthCircle, @required this.counterText}){
+  FlutterGaugeMain({this.inactiveColor, this.activeColor, this.subtitleStyle,this.titleStyle,this.numberInAndOut,this.width,this.paddingHand=30.0,this.circleColor = Colors.cyan,this.handColor = Colors.black,this.backgroundColor = Colors.cyan,this.indicatorColor = Colors.black,this.shadowHand=4.0,this.counterAlign=CounterAlign.bottom,this.number=Number.all,this.isCircle=true,this.hand= Hand.long,this.secondsMarker=SecondsMarker.all,this.isMark,this.handSize=30,this.start,this.end,this.highlightStart,this.highlightEnd, this.eventObservable,@required this.fontFamily,@required this.widthCircle, @required this.titleText, this.subtitle, @required this.animationDuration, }){
     padding = EdgeInsets.all(widthCircle);
+    double heigthMultiplier = 1.0;
+    if(!this.isCircle){
+      heigthMultiplier = 0.8;
+    }
+    height = width * heigthMultiplier;
   }
 
   @override
-  _FlutterGaugeMainState createState() => new _FlutterGaugeMainState(this.start,this.end,this.highlightStart,this.highlightEnd,this.eventObservable);
+  _FlutterGaugeMainState createState() => new _FlutterGaugeMainState(this.start,this.end,this.highlightStart, this.highlightEnd, this.animationDuration, this.eventObservable);
 }
 
 class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProviderStateMixin{
@@ -64,6 +72,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
   double highlightStart;
   double highlightEnd;
   PublishSubject<double> eventObservable;
+  Duration duration = Duration(seconds: 3);
   double val = 0.0;
   double newVal;
   AnimationController percentageAnimationController;
@@ -77,17 +86,18 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
   }
 
 
-  _FlutterGaugeMainState(int start, int end, double highlightStart, double highlightEnd, PublishSubject<double> eventObservable) {
+  _FlutterGaugeMainState(int start, int end, double highlightStart, double highlightEnd, Duration duration, PublishSubject<double> eventObservable) {
     this.start = start;
     this.end = end;
     this.highlightStart = highlightStart;
     this.highlightEnd = highlightEnd;
     this.eventObservable = eventObservable;
-
-
+    if(duration != null){
+      this.duration = duration;
+    }
     percentageAnimationController = new AnimationController(
         vsync: this,
-        duration: new Duration(milliseconds: 1000)
+        duration: this.duration
     )
       ..addListener((){
         setState(() {
@@ -112,7 +122,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
       child: new LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return new Container(
-              height: widget.width,
+              height: widget.height,
               width: widget.width,
               alignment: Alignment.center,
               child: new Stack(
@@ -156,7 +166,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
                     ),
 
                     Container(
-                      height: constraints.maxWidth ,
+                      height: constraints.maxHeight ,
                       width: constraints.maxWidth ,
 //                      alignment: Alignment.center,
                       padding: EdgeInsets.only(top: widget.hand == Hand.short ?widget.widthCircle :widget.widthCircle,bottom: widget.widthCircle,right: widget.widthCircle,left: widget.widthCircle,),
@@ -173,20 +183,20 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
                               fontFamily: widget.fontFamily,
 //                              color: this.widget.colorHourHand,
                               widthCircle: widget.widthCircle,
-                              textStyle:widget.textStyle == null
+                              textStyle:widget.subtitleStyle == null
                               ?TextStyle(
                                   color: Colors.black,
                                   fontSize: 15.0,
                                   fontFamily: widget.fontFamily
                               )
-                              :widget.textStyle
+                              :widget.subtitleStyle
                           )),
                     ),
 
                     widget.hand != Hand.none
                         ?new Center(
                         child: new Container(
-                          height: constraints.maxWidth,
+                          height: constraints.maxHeight,
                           width: constraints.maxWidth,
                           padding: EdgeInsets.all(widget.hand == Hand.short ?widget.widthCircle/1.5 :widget.paddingHand),
                           child: new CustomPaint(
@@ -210,17 +220,21 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
                           painter: new GaugeTextCounter(
                               start: this.start,
                               width: widget.widthCircle,
+                              height: widget.height,
+                              widthCircle: widget.widthCircle,
                               counterAlign: widget.counterAlign,
                               end: this.end,
-                              value: widget.counterText,
+                              title: widget.titleText,
+                              subtitle: widget.subtitle,
                               fontFamily: widget.fontFamily,
-                              textStyle:widget.counterStyle == null
+                              titleStyle:widget.titleStyle == null
                               ?TextStyle(
                                   color: Colors.black,
                                   fontSize: 17.0,
                                   fontFamily: widget.fontFamily
                               )
-                              :widget.counterStyle
+                              :widget.titleStyle,
+                              subtitleStyle: widget.subtitleStyle
                           )
                       )
                       :SizedBox(),

@@ -179,16 +179,20 @@ class GaugeTextCounter extends CustomPainter {
 
   final Paint tickPaint;
   final TextPainter textPainter;
-  final TextStyle textStyle;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
 
   int end;
   int start;
-  String value;
+  String title;
+  String subtitle;
   String fontFamily;
   CounterAlign counterAlign;
   double width;
+  double height;
+  double widthCircle;
 
-  GaugeTextCounter({this.width,this.counterAlign,this.start, this.end, this.value,this.fontFamily,this.textStyle,})
+  GaugeTextCounter({this.width,this.counterAlign,this.start, this.end,@required this.title,this.fontFamily,this.titleStyle,this.subtitle,@required this.subtitleStyle,@required this.height,@required this.widthCircle})
       : tickPaint = new Paint(),
         textPainter = new TextPainter(
           textAlign: TextAlign.center,
@@ -201,32 +205,36 @@ class GaugeTextCounter extends CustomPainter {
     final angle = 2 * pi / 60;
     final radius = size.width / 2;
     canvas.save();
-    canvas.translate(radius, radius);
+    double dx = radius;
+    double dy = 20+widthCircle;
+    if(counterAlign == CounterAlign.bottom){
+      dy = dy + height / 2.5;
+    }else if(counterAlign == CounterAlign.center){
+      dy = dy + height / 5;
+    }
+    canvas.translate(dx, dy);
     for (var i = 0; i <= 60; i++) {
 
       if (i == 30) {
-
-        String label;
-        label = this.value;
-
         canvas.save();
-
-        if(counterAlign == CounterAlign.bottom){
-          canvas.translate(0.0, -radius + (60) );
-        }else if(counterAlign == CounterAlign.top){
-          canvas.translate(0.0, radius - (40));
-        }
-
         textPainter.text = new TextSpan(
-          text: label,
-          style: textStyle
+          text: this.title,
+          style: titleStyle
         );
         canvas.rotate(-angle * i);
 
         textPainter.layout();
-
-        textPainter.paint(canvas, new Offset(-(textPainter.width / 2), counterAlign == CounterAlign.center ?-width :0));
-
+        Offset offset = new Offset(-(textPainter.width / 2), 0);
+        textPainter.paint(canvas, offset);
+        if(this.subtitle != ""){
+          textPainter.text = new TextSpan(
+            text: this.subtitle,
+            style: subtitleStyle
+          );
+          textPainter.layout();
+          offset = new Offset(-(textPainter.width / 2), 40);
+          textPainter.paint(canvas, offset);
+        }
         canvas.restore();
       }
 
