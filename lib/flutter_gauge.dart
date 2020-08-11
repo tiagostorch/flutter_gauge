@@ -135,14 +135,8 @@ class _FlutterGaugeState extends State<FlutterGauge> {
             activeColor : widget.activeColor,
             width : (
                 widget.width == null
-                    ?MediaQuery.of(context).size.width/2
-                    :widget.width < (MediaQuery.of(context).size.width/2)
-                    ?(MediaQuery.of(context).size.width/2)
-                    :(
-                    widget.width > (MediaQuery.of(context).size.width)
-                        ?MediaQuery.of(context).size.width
-                        :widget.width
-                )
+                    ? MediaQuery.of(context).size.width/2
+                    : widget.width
             ), 
             titleText: widget.titleText,
             subtitle: widget.subtitleText,
