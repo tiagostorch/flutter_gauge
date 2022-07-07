@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_gauge/handpainter.dart';
 import 'package:flutter_gauge/linepainter.dart';
 import 'package:rxdart/rxdart.dart';
@@ -113,8 +112,8 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   }
 
   @override
-  void setState(VoidCallback fn){
-    if(mounted){
+  void setState(VoidCallback fn) {
+    if (mounted) {
       super.setState(fn);
     }
   }
@@ -134,6 +133,10 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
     if (duration != null) {
       this.duration = duration;
     }
+  }
+
+  @override
+  initState() {
     percentageAnimationController =
         new AnimationController(vsync: this, duration: this.duration)
           ..addListener(() {
