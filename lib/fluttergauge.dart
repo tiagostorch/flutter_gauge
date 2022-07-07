@@ -86,28 +86,34 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>  with TickerProvide
   }
 
 
-  _FlutterGaugeMainState(int start, int end, double highlightStart, double highlightEnd, Duration duration, PublishSubject<double> eventObservable) {
-    if(mounted){
-      this.start = start;
-      this.end = end;
-      this.highlightStart = highlightStart;
-      this.highlightEnd = highlightEnd;
-      this.eventObservable = eventObservable;
-      if(duration != null){
-        this.duration = duration;
-      }
+  _FlutterGaugeMainState(
+      int start,
+      int end,
+      double highlightStart,
+      double highlightEnd,
+      Duration duration,
+      PublishSubject<double> eventObservable) {
+    this.start = start;
+    this.end = end;
+    this.highlightStart = highlightStart;
+    this.highlightEnd = highlightEnd;
+    this.eventObservable = eventObservable;
+    if (duration != null) {
+      this.duration = duration;
+    }
+    if (mounted) {
       percentageAnimationController = new AnimationController(
-          vsync: this,
-          duration: this.duration
-      )
-        ..addListener((){
+          vsync: this, duration: this.duration)
+        ..addListener(() {
           setState(() {
-            val = lerpDouble(val,newVal,percentageAnimationController.value);
+            val = lerpDouble(val, newVal, percentageAnimationController.value);
           });
         });
       subscription = this.eventObservable.listen((value) {
-        (value >= this.end) ? reloadData(this.end.toDouble()) : reloadData(value);
-      });//(value) => reloadData(value));
+        (value >= this.end)
+            ? reloadData(this.end.toDouble())
+            : reloadData(value);
+      }); //(value) => reloadData(value));
     }
   }
 
