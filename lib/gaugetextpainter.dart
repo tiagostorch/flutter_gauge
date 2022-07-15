@@ -13,20 +13,20 @@ class GaugeTextPainter extends CustomPainter {
 
   final Paint tickPaint;
   final TextPainter textPainter;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
-  int end;
-  int start;
-  double value;
-  double widthCircle;
-  String fontFamily;
-  Number number;
-  SecondsMarker secondsMarker;
-  NumberInAndOut numberInAndOut;
-  Color inactiveColor;
+  int? end;
+  int? start;
+  double? value;
+  double? widthCircle;
+  String? fontFamily;
+  Number? number;
+  SecondsMarker? secondsMarker;
+  NumberInAndOut? numberInAndOut;
+  Color? inactiveColor;
   Color activeColor;
 
-  GaugeTextPainter({this.inactiveColor, this.activeColor, this.numberInAndOut,this.widthCircle,this.secondsMarker,this.start, this.end, this.value,this.fontFamily,this.textStyle,this.number,})
+  GaugeTextPainter({this.inactiveColor, required this.activeColor, this.numberInAndOut,this.widthCircle,this.secondsMarker,this.start, this.end, this.value,this.fontFamily,this.textStyle,this.number,})
       : tickPaint = new Paint(),
         textPainter = new TextPainter(
           textAlign: TextAlign.center,
@@ -37,14 +37,14 @@ class GaugeTextPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var tickMarkLength;
-    final angle = ((2/3) * 2) * pi / end;
+    final angle = ((2/3) * 2) * pi / end!;
 //    final radius = (size.width / 2)-widthCircle;
     final radius = (size.width / 2);
     canvas.save();
     // drawing
     canvas.translate(radius, radius);
     canvas.rotate(-2.1);
-    for (var i = 0; i <= end; i++) {
+    for (var i = 0; i <= end!; i++) {
       //make the length and stroke of the tick marker longer and thicker depending
       tickMarkLength = i % 5 == 0
           ? hourTickMarkLength
@@ -53,8 +53,8 @@ class GaugeTextPainter extends CustomPainter {
           ?hourTickMarkWidth
           : secondsMarker != SecondsMarker.seconds ?minuteTickMarkLength :hourTickMarkWidth;
 
-      if(value.toInt() == i){
-        tickPaint.color = inactiveColor;
+      if(value!.toInt() == i){
+        tickPaint.color = inactiveColor!;
 
       }
 
@@ -79,18 +79,18 @@ class GaugeTextPainter extends CustomPainter {
             canvas.drawLine(new Offset(0.0, -radius + 18), new Offset(0.0, -radius + 12), tickPaint);
           }
         }else if(secondsMarker == SecondsMarker.seconds){
-          canvas.drawLine(new Offset(0.0, -radius - widthCircle/2), new Offset(0.0, -radius + widthCircle/2 ), tickPaint);
+          canvas.drawLine(new Offset(0.0, -radius - widthCircle!/2), new Offset(0.0, -radius + widthCircle!/2 ), tickPaint);
         }
 
       }
 
       //draw the text
-      if (i % (end < 100 ?5 :10) == 0 || i == end) {
+      if (i % (end! < 100 ?5 :10) == 0 || i == end) {
 //                String label = i == 40 ? start.toString() : this.end.toString();
         String label = i.toString();
         canvas.save();
         if(numberInAndOut == NumberInAndOut.inside){
-          canvas.translate(i == 40 ? -0.0 : 0.0, -radius + (widthCircle * 2));
+          canvas.translate(i == 40 ? -0.0 : 0.0, -radius + (widthCircle! * 2));
         }else{
           canvas.translate(i == 40 ? -0.0 : 0.0, -radius - (0));
         }
@@ -113,7 +113,7 @@ class GaugeTextPainter extends CustomPainter {
             textPainter.paint(canvas, new Offset(-(textPainter.width / 2), -(textPainter.height / 2)));
           }
         }else if(number == Number.endAndCenterAndStart){
-          if(i == 0 || i == end ||  i == end ~/ 2){
+          if(i == 0 || i == end ||  i == end! ~/ 2){
             textPainter.paint(canvas, new Offset(-(textPainter.width / 2), -(textPainter.height / 1.5)));
           }
         }
@@ -179,20 +179,20 @@ class GaugeTextCounter extends CustomPainter {
 
   final Paint tickPaint;
   final TextPainter textPainter;
-  final TextStyle titleStyle;
-  final TextStyle subtitleStyle;
+  final TextStyle? titleStyle;
+  final TextStyle? subtitleStyle;
 
-  int end;
-  int start;
+  int? end;
+  int? start;
   String title;
-  String subtitle;
-  String fontFamily;
-  CounterAlign counterAlign;
-  double width;
-  double height;
+  String? subtitle;
+  String? fontFamily;
+  CounterAlign? counterAlign;
+  double? width;
+  double? height;
   double widthCircle;
 
-  GaugeTextCounter({this.width,this.counterAlign,this.start, this.end,@required this.title,this.fontFamily,this.titleStyle,this.subtitle,@required this.subtitleStyle,@required this.height,@required this.widthCircle})
+  GaugeTextCounter({this.width,this.counterAlign,this.start, this.end,required this.title,this.fontFamily,this.titleStyle,this.subtitle,required this.subtitleStyle,required this.height,required this.widthCircle})
       : tickPaint = new Paint(),
         textPainter = new TextPainter(
           textAlign: TextAlign.center,
@@ -208,9 +208,9 @@ class GaugeTextCounter extends CustomPainter {
     double dx = radius;
     double dy = 20+widthCircle;
     if(counterAlign == CounterAlign.bottom){
-      dy = dy + height / 2.5;
+      dy = dy + height! / 2.5;
     }else if(counterAlign == CounterAlign.center){
-      dy = dy + height / 5;
+      dy = dy + height! / 5;
     }
     canvas.translate(dx, dy);
     for (var i = 0; i <= 60; i++) {
@@ -232,7 +232,7 @@ class GaugeTextCounter extends CustomPainter {
             style: subtitleStyle
           );
           textPainter.layout();
-          offset = new Offset(-(textPainter.width / 2), titleStyle.fontSize);
+          offset = new Offset(-(textPainter.width / 2), titleStyle!.fontSize!);
           textPainter.paint(canvas, offset);
         }
         canvas.restore();

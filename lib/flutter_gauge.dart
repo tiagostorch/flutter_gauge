@@ -33,7 +33,7 @@ class FlutterGauge extends StatefulWidget {
   String fontFamily;
   double widthCircle;
   double index;
-  double width;
+  double? width;
   Number number;
   NumberInAndOut numberInAndOut;
   CounterAlign counterAlign;
@@ -49,13 +49,13 @@ class FlutterGauge extends StatefulWidget {
   Color inactiveColor;
   Color activeColor;
   double paddingHand;
-  Animate animate;
-  TextStyle titleStyle;
-  TextStyle subtitleStyle;
+  Animate? animate;
+  TextStyle? titleStyle;
+  TextStyle? subtitleStyle;
   String titleText;
-  String subtitleText;
+  String? subtitleText;
   final double maxWidthCircle = 40;
-  Duration animationDuration;
+  Duration? animationDuration;
 
   FlutterGauge(
       {this.inactiveColor = Colors.black,
@@ -77,10 +77,10 @@ class FlutterGauge extends StatefulWidget {
       this.handSize = 30,
       this.start = 0,
       this.end = 100,
-      @required this.index,
+      required this.index,
       this.fontFamily = "",
       this.widthCircle = 20,
-      @required this.titleText,
+      required this.titleText,
       this.subtitleStyle,
       this.subtitleText,
       this.animationDuration});
@@ -135,7 +135,7 @@ class _FlutterGaugeState extends State<FlutterGauge> {
           activeColor: widget.activeColor,
           width: (widget.width == null
               ? MediaQuery.of(context).size.width / 2
-              : widget.width),
+              : widget.width!),
           titleText: widget.titleText,
           subtitle: widget.subtitleText,
           animationDuration: widget.animationDuration,

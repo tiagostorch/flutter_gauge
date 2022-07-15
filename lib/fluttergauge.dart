@@ -10,19 +10,19 @@ import 'flutter_gauge.dart';
 import 'gaugetextpainter.dart';
 
 class FlutterGaugeMain extends StatefulWidget {
-  int start;
-  int end;
-  double highlightStart;
-  double highlightEnd;
+  int? start;
+  int? end;
+  double? highlightStart;
+  double? highlightEnd;
 //  ThemeData themeData;
   String fontFamily;
   double widthCircle;
-  PublishSubject<double> eventObservable;
+  PublishSubject<double>? eventObservable;
   Number number;
   CounterAlign counterAlign;
   Hand hand;
   bool isCircle;
-  Map isMark;
+  Map? isMark;
   double handSize;
   SecondsMarker secondsMarker;
   double shadowHand;
@@ -32,16 +32,16 @@ class FlutterGaugeMain extends StatefulWidget {
   Color indicatorColor;
   double paddingHand;
   double width;
-  double height;
-  NumberInAndOut numberInAndOut;
-  TextStyle titleStyle;
-  TextStyle subtitleStyle;
-  EdgeInsets padding;
-  Color inactiveColor;
-  Color activeColor;
+  double? height;
+  NumberInAndOut? numberInAndOut;
+  TextStyle? titleStyle;
+  TextStyle? subtitleStyle;
+  EdgeInsets? padding;
+  Color? inactiveColor;
+  Color? activeColor;
   String titleText;
-  String subtitle;
-  Duration animationDuration;
+  String? subtitle;
+  Duration? animationDuration;
 
   FlutterGaugeMain({
     this.inactiveColor,
@@ -49,7 +49,7 @@ class FlutterGaugeMain extends StatefulWidget {
     this.subtitleStyle,
     this.titleStyle,
     this.numberInAndOut,
-    this.width,
+    required this.width,
     this.paddingHand = 30.0,
     this.circleColor = Colors.cyan,
     this.handColor = Colors.black,
@@ -68,11 +68,11 @@ class FlutterGaugeMain extends StatefulWidget {
     this.highlightStart,
     this.highlightEnd,
     this.eventObservable,
-    @required this.fontFamily,
-    @required this.widthCircle,
-    @required this.titleText,
+    required this.fontFamily,
+    required this.widthCircle,
+    required this.titleText,
     this.subtitle,
-    @required this.animationDuration,
+    required this.animationDuration,
   }) {
     padding = EdgeInsets.all(widthCircle);
     double heigthMultiplier = 1.0;
@@ -94,16 +94,16 @@ class FlutterGaugeMain extends StatefulWidget {
 
 class _FlutterGaugeMainState extends State<FlutterGaugeMain>
     with TickerProviderStateMixin {
-  int start;
-  int end;
-  double highlightStart;
-  double highlightEnd;
-  PublishSubject<double> eventObservable;
+  int? start;
+  int? end;
+  double? highlightStart;
+  double? highlightEnd;
+  PublishSubject<double>? eventObservable;
   Duration duration = Duration(seconds: 3);
-  double val = 0.0;
-  double newVal;
-  AnimationController percentageAnimationController;
-  StreamSubscription<double> subscription;
+  double? val = 0.0;
+  double? newVal;
+  late AnimationController percentageAnimationController;
+  StreamSubscription<double>? subscription;
 
   @override
   void dispose() {
@@ -119,12 +119,12 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   }
 
   _FlutterGaugeMainState(
-      int start,
-      int end,
-      double highlightStart,
-      double highlightEnd,
-      Duration duration,
-      PublishSubject<double> eventObservable) {
+      int? start,
+      int? end,
+      double? highlightStart,
+      double? highlightEnd,
+      Duration? duration,
+      PublishSubject<double>? eventObservable) {
     this.start = start;
     this.end = end;
     this.highlightStart = highlightStart;
@@ -145,8 +145,8 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                   lerpDouble(val, newVal, percentageAnimationController.value);
             });
           });
-    subscription = this.eventObservable.listen((value) {
-      (value >= this.end) ? reloadData(this.end.toDouble()) : reloadData(value);
+    subscription = this.eventObservable!.listen((value) {
+      (value >= this.end!) ? reloadData(this.end!.toDouble()) : reloadData(value);
     }); //(value) => reloadData(value));
   }
 
@@ -213,7 +213,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                       secondsMarker: widget.secondsMarker,
                       number: widget.number,
                       inactiveColor: widget.inactiveColor,
-                      activeColor: widget.activeColor,
+                      activeColor: widget.activeColor!,
                       start: this.start,
                       end: this.end,
                       value: this.val,
