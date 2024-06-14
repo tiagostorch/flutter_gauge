@@ -17,6 +17,7 @@ class FlutterGaugeMain extends StatefulWidget {
 //  ThemeData themeData;
   String fontFamily;
   double widthCircle;
+  double percentage;
   PublishSubject<double>? eventObservable;
   Number number;
   CounterAlign counterAlign;
@@ -73,6 +74,7 @@ class FlutterGaugeMain extends StatefulWidget {
     required this.titleText,
     this.subtitle,
     required this.animationDuration,
+    required this.percentage,
   }) {
     padding = EdgeInsets.all(widthCircle);
     double heigthMultiplier = 1.0;
@@ -88,6 +90,7 @@ class FlutterGaugeMain extends StatefulWidget {
       this.end,
       this.highlightStart,
       this.highlightEnd,
+      this.percentage,
       this.animationDuration,
       this.eventObservable);
 }
@@ -102,6 +105,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   Duration duration = Duration(seconds: 3);
   double? val = 0.0;
   double? newVal;
+  double? percentage;
   late AnimationController percentageAnimationController;
   StreamSubscription<double>? subscription;
 
@@ -123,6 +127,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
       int? end,
       double? highlightStart,
       double? highlightEnd,
+      double? percentage,
       Duration? duration,
       PublishSubject<double>? eventObservable) {
     this.start = start;
@@ -130,6 +135,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
     this.highlightStart = highlightStart;
     this.highlightEnd = highlightEnd;
     this.eventObservable = eventObservable;
+    this.percentage = percentage;
     if (duration != null) {
       this.duration = duration;
     }
@@ -146,7 +152,9 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
             });
           });
     subscription = this.eventObservable!.listen((value) {
-      (value >= this.end!) ? reloadData(this.end!.toDouble()) : reloadData(value);
+      (value >= this.end!)
+          ? reloadData(this.end!.toDouble())
+          : reloadData(value);
     }); //(value) => reloadData(value));
   }
 
@@ -180,7 +188,8 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                             startPercent: this.widget.highlightStart,
                             endPercent: this.widget.highlightEnd,
                             width: this.widget.widthCircle,
-                            value: this.val)),
+                            value: this.val,
+                            percentage: this.percentage)),
                   )
                 : SizedBox(),
             widget.hand == Hand.none || widget.hand == Hand.short

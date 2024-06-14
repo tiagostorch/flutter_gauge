@@ -33,6 +33,7 @@ class FlutterGauge extends StatefulWidget {
   String fontFamily;
   double widthCircle;
   double index;
+  double percentage;
   double? width;
   Number number;
   NumberInAndOut numberInAndOut;
@@ -78,6 +79,7 @@ class FlutterGauge extends StatefulWidget {
       this.start = 0,
       this.end = 100,
       required this.index,
+      required this.percentage,
       this.fontFamily = "",
       this.widthCircle = 20,
       required this.titleText,
@@ -139,6 +141,7 @@ class _FlutterGaugeState extends State<FlutterGauge> {
           titleText: widget.titleText,
           subtitle: widget.subtitleText,
           animationDuration: widget.animationDuration,
+          percentage: widget.percentage,
         )
       ],
     );
