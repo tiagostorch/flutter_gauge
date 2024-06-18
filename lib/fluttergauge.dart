@@ -159,7 +159,6 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   }
 
   reloadData(double value) {
-    print(value);
     newVal = value;
     percentageAnimationController.forward(from: 0.0);
   }
@@ -189,7 +188,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                             endPercent: this.widget.highlightEnd,
                             width: this.widget.widthCircle,
                             value: this.val,
-                            percentage: this.percentage)),
+                            percentage: this.val)),
                   )
                 : SizedBox(),
             widget.hand == Hand.none || widget.hand == Hand.short
