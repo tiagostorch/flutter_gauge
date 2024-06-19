@@ -106,8 +106,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   PublishSubject<double>? eventObservable;
   Duration duration = Duration(seconds: 3);
   double? val = 0.0;
-  double? newVal = 0.0;
-  double? newValHand;
+  double? newVal;
   double? percentage;
   late AnimationController percentageAnimationController;
   StreamSubscription<double>? subscription;
@@ -163,13 +162,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   }
 
   reloadData(double value) {
-    if (end! > 100) {
-      newVal = percentage! / end! * 100;
-      newValHand = percentage;
-    } else {
-      newVal = value;
-      newValHand = value;
-    }
+    newVal = value;
     percentageAnimationController.forward(from: 0.0);
   }
 
@@ -257,7 +250,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                       painter: new HandPainter(
                           shadowHand: widget.shadowHand,
                           hand: widget.hand,
-                          value: newValHand ?? 0,
+                          value: val,
                           start: this.start,
                           end: this.end,
                           color: this.widget.handColor,
