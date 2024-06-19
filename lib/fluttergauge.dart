@@ -16,7 +16,6 @@ class FlutterGaugeMain extends StatefulWidget {
   int? end;
   double? highlightStart;
   double? highlightEnd;
-//  ThemeData themeData;
   String fontFamily;
   double widthCircle;
   double percentage;
@@ -88,13 +87,14 @@ class FlutterGaugeMain extends StatefulWidget {
 
   @override
   _FlutterGaugeMainState createState() => new _FlutterGaugeMainState(
-      this.start,
-      this.end,
-      this.highlightStart,
-      this.highlightEnd,
-      this.percentage,
-      this.animationDuration,
-      this.eventObservable);
+        this.start,
+        this.end,
+        this.highlightStart,
+        this.highlightEnd,
+        this.percentage,
+        this.animationDuration,
+        this.eventObservable,
+      );
 }
 
 class _FlutterGaugeMainState extends State<FlutterGaugeMain>
@@ -150,8 +150,8 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
         new AnimationController(vsync: this, duration: this.duration)
           ..addListener(() {
             setState(() {
-              val =
-                  lerpDouble(val, newVal, percentageAnimationController.value);
+              val = lerpDouble(
+                  val, widget.percentage, percentageAnimationController.value);
             });
           });
     subscription = this.eventObservable!.listen((value) {
@@ -162,7 +162,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   }
 
   reloadData(double value) {
-    newVal = percentage;
+    newVal = widget.percentage;
     percentageAnimationController.forward(from: 0.0);
   }
 
@@ -212,7 +212,6 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
             Container(
               height: constraints.maxHeight,
               width: constraints.maxWidth,
-//                      alignment: Alignment.center,
               padding: EdgeInsets.only(
                 top: widget.hand == Hand.short
                     ? widget.widthCircle
@@ -232,7 +231,6 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                       end: this.end,
                       value: this.val,
                       fontFamily: widget.fontFamily,
-//                              color: this.widget.colorHourHand,
                       widthCircle: widget.widthCircle,
                       textStyle: widget.subtitleStyle == null
                           ? TextStyle(
