@@ -158,11 +158,11 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
       (value >= this.end!)
           ? reloadData(this.end!.toDouble())
           : reloadData(value);
-    }); //(value) => reloadData(value));
+    });
   }
 
   reloadData(double value) {
-    newVal = value;
+    newVal = percentage;
     percentageAnimationController.forward(from: 0.0);
   }
 
@@ -182,16 +182,19 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                     width: constraints.maxWidth,
                     padding: widget.padding,
                     child: new CustomPaint(
-                        foregroundPainter: new LinePainter(
-                            lineColor: this.widget.backgroundColor,
-                            completeColor: this.widget.circleColor,
-                            startValue: this.start,
-                            endValue: this.end,
-                            startPercent: this.widget.highlightStart,
-                            endPercent: this.widget.highlightEnd,
-                            width: this.widget.widthCircle,
-                            value: this.val,
-                            percentage: this.val)),
+                      foregroundPainter: new LinePainter(
+                        lineColor: this.widget.backgroundColor,
+                        completeColor: this.widget.circleColor,
+                        startValue: this.start,
+                        endValue: this.end,
+                        startPercent: this.widget.highlightStart,
+                        endPercent: this.widget.highlightEnd,
+                        width: this.widget.widthCircle,
+                        value: this.val,
+                        percentage:
+                            end! > 100 ? (this.val! / end! * 100) : this.val,
+                      ),
+                    ),
                   )
                 : SizedBox(),
             widget.hand == Hand.none || widget.hand == Hand.short
