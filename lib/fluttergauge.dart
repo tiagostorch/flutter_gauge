@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 import 'dart:ui';
 
@@ -143,6 +145,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
 
   @override
   initState() {
+    super.initState();
     percentageAnimationController =
         new AnimationController(vsync: this, duration: this.duration)
           ..addListener(() {
@@ -247,7 +250,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                       painter: new HandPainter(
                           shadowHand: widget.shadowHand,
                           hand: widget.hand,
-                          value: val,
+                          value: percentage,
                           start: this.start,
                           end: this.end,
                           color: this.widget.handColor,

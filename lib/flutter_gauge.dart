@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 library flutter_gauge;
 
 import 'dart:async';

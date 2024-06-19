@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 300,
                 widthCircle: 20,
                 index: 6.8 * 3,
-                end: 10 * 3,
+                end: 500,
                 number: Number.all,
                 secondsMarker: SecondsMarker.secondsAndMinute,
                 hand: Hand.short,
