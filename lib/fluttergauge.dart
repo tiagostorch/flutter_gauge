@@ -163,6 +163,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
 
   reloadData(double value) {
     newVal = widget.percentage;
+    this.end = widget.end;
     percentageAnimationController.forward(from: 0.0);
   }
 
