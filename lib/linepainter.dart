@@ -29,12 +29,12 @@ class LinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint line = new Paint()
       ..color = Color(0xFFC8C8C8)
-      ..strokeCap = StrokeCap.butt
+      ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width!;
     Paint complete = new Paint()
       ..color = completeColor!
-      ..strokeCap = StrokeCap.butt
+      ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width!;
     Offset center = new Offset(size.width / 2, size.height / 2);

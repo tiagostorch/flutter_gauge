@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 end: 100,
                 number: Number.all,
                 secondsMarker: SecondsMarker.secondsAndMinute,
-                hand: Hand.short,
+                hand: Hand.long,
                 counterAlign: CounterAlign.center,
                 handColor: Colors.black,
                 titleText: "6.8",
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontSize: 20,
                 ),
                 animationDuration: Duration(seconds: 25),
-                percentage: 75,
+                percentage: 100,
               ),
               new Text("Height")
             ],
