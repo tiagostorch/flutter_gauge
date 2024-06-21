@@ -90,7 +90,7 @@ class GaugeTextPainter extends CustomPainter {
         }
       }
 
-      int interval = (end! / 7).ceil();
+      int interval = (end! / 5).ceil();
 
       if (i % interval == 0 || i == end) {
         String label = i.toString();
