@@ -261,6 +261,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                   ))
                 : SizedBox(),
             Container(
+              margin: EdgeInsets.only(top: 24),
               child: widget.counterAlign != CounterAlign.none
                   ? new CustomPaint(
                       painter: new GaugeTextCounter(
