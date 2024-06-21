@@ -47,14 +47,11 @@ class GaugeTextPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var tickMarkLength;
     final angle = ((2 / 3) * 2) * pi / end!;
-//    final radius = (size.width / 2)-widthCircle;
     final radius = (size.width / 2);
     canvas.save();
-    // drawing
     canvas.translate(radius, radius);
     canvas.rotate(-2.1);
     for (var i = 0; i <= end!; i++) {
-      //make the length and stroke of the tick marker longer and thicker depending
       tickMarkLength = i % 5 == 0
           ? hourTickMarkLength
           : secondsMarker != SecondsMarker.seconds
@@ -70,11 +67,7 @@ class GaugeTextPainter extends CustomPainter {
         tickPaint.color = inactiveColor!;
       }
 
-//      canvas.translate(-1, 0);
-//      canvas.transform(4.0);
-      //seconds & minutes
       if (i != 0 && i % 3 == 0) {
-        //(end / 1.5).toInt() > i && i != 0
         if (secondsMarker == SecondsMarker.all) {
           canvas.drawLine(new Offset(0.0, -radius - 21),
               new Offset(0.0, -radius - 15 + tickMarkLength), tickPaint);
@@ -97,9 +90,9 @@ class GaugeTextPainter extends CustomPainter {
         }
       }
 
-      //draw the text
-      if (i % (end! < 100 ? 5 : (end! / 5)) == 0 || i == end) {
-//                String label = i == 40 ? start.toString() : this.end.toString();
+      int interval = (end! / 7).ceil();
+
+      if (i % interval == 0 || i == end) {
         String label = i.toString();
         canvas.save();
         if (numberInAndOut == NumberInAndOut.inside) {
@@ -113,7 +106,6 @@ class GaugeTextPainter extends CustomPainter {
           style: textStyle,
         );
 
-        //helps make the text painted vertically
         canvas.rotate(-angle * i + 2.1);
 
         textPainter.layout();
