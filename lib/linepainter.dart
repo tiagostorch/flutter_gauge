@@ -40,7 +40,7 @@ class LinePainter extends CustomPainter {
     Offset center = new Offset(size.width / 2, size.height / 2);
     double radius = min(size.width / 2, size.height / 2);
 
-    double sweepAngle = (40 * angle) * (percentage! / 100);
+    double sweepAngle = (40 * angle) * (percentage! / endValue!);
 
     canvas.drawArc(new Rect.fromCircle(center: center, radius: radius),
         25 * angle, 40 * angle, false, line);
