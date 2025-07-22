@@ -12,6 +12,7 @@ class LinePainter extends CustomPainter {
   int? startValue;
   int? endValue;
   final angle = 2 * pi / 60;
+  double? percentageIndicator;
 
   double? value;
 
@@ -24,7 +25,8 @@ class LinePainter extends CustomPainter {
       this.endPercent,
       this.width,
       this.percentage,
-      this.value});
+      this.value,
+      this.percentageIndicator});
   @override
   void paint(Canvas canvas, Size size) {
     Paint line = new Paint()

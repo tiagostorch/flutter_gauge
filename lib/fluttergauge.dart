@@ -19,6 +19,7 @@ class FlutterGaugeMain extends StatefulWidget {
   String fontFamily;
   double widthCircle;
   double percentage;
+  double percentageIndicator;
   PublishSubject<double>? eventObservable;
   Number number;
   CounterAlign counterAlign;
@@ -76,6 +77,7 @@ class FlutterGaugeMain extends StatefulWidget {
     this.subtitle,
     required this.animationDuration,
     required this.percentage,
+    required this.percentageIndicator,
   }) {
     padding = EdgeInsets.all(widthCircle);
     double heigthMultiplier = 1.0;
@@ -92,6 +94,7 @@ class FlutterGaugeMain extends StatefulWidget {
         this.highlightStart,
         this.highlightEnd,
         this.percentage,
+        this.percentageIndicator,
         this.animationDuration,
         this.eventObservable,
       );
@@ -106,14 +109,18 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
   PublishSubject<double>? eventObservable;
   Duration duration = Duration(seconds: 3);
   double? val = 0.0;
+  double? valIndicator = 0.0;
   double? newVal;
   double? percentage;
+  double? percentageIndicator;
   late AnimationController percentageAnimationController;
+  late AnimationController percentageIndicatorAnimationController;
   StreamSubscription<double>? subscription;
 
   @override
   void dispose() {
     percentageAnimationController.dispose();
+    percentageIndicatorAnimationController.dispose();
     super.dispose();
   }
 
@@ -130,6 +137,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
       double? highlightStart,
       double? highlightEnd,
       double? percentage,
+      double? percentageIndicator,
       Duration? duration,
       PublishSubject<double>? eventObservable) {
     this.start = start;
@@ -138,6 +146,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
     this.highlightEnd = highlightEnd;
     this.eventObservable = eventObservable;
     this.percentage = percentage;
+    this.percentageIndicator = percentageIndicator;
     if (duration != null) {
       this.duration = duration;
     }
@@ -154,6 +163,16 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                   val, widget.percentage, percentageAnimationController.value);
             });
           });
+    percentageIndicatorAnimationController =
+        new AnimationController(vsync: this, duration: this.duration)
+          ..addListener(() {
+            setState(() {
+              valIndicator = lerpDouble(
+                  valIndicator,
+                  widget.percentageIndicator,
+                  percentageIndicatorAnimationController.value);
+            });
+          });
     subscription = this.eventObservable!.listen((value) {
       (value >= this.end!)
           ? reloadData(this.end!.toDouble())
@@ -165,6 +184,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
     newVal = widget.percentage;
     this.end = widget.end;
     percentageAnimationController.forward(from: 0.0);
+    percentageIndicatorAnimationController.forward(from: 0.0);
   }
 
   @override
@@ -252,7 +272,7 @@ class _FlutterGaugeMainState extends State<FlutterGaugeMain>
                       painter: new HandPainter(
                           shadowHand: widget.shadowHand,
                           hand: widget.hand,
-                          value: val,
+                          value: valIndicator,
                           start: this.start,
                           end: this.end,
                           color: this.widget.handColor,
